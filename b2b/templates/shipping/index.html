@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div id="messages"></div>
+<section>
+    <h1 class="mb-3 fs-1 fw-bold">Shipping</h1>
+    <div class="row">
+        <div class="col-lg-4 fs-5 fw-bold">
+            <h3 class="fs-3 fw-bold">Shipping options</h3>
+            <form action="" hx-get="{% url 'shipping:shipping-index' %}" hx-target="#messages">
+                <div class="input-group">
+                    {% render_field form.ship_to class+="form-control" %}
+                    <input type="submit" value="select" class="btn btn-primary">
+                </div>
+            </form>
+            <div class="my-3">
+                <h3 class="my-5 fs-3 fw-bold">Shipping address</h3>
+                <a class="text-decoration-none" href="{% url 'address:address_create' %}">Change shipping address</a>
+                <address>{{address.address}}</address>
+                <a href="tel:{{address.phone_number}}">Your number: {{address.phone_number}}</a>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <h3 class="fs-3 fw-bold">Order #{{items.order}}</h3>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr class="fs-5 fw-bold">
+                        <th scope="col">title</th>
+                        <th scope="col">price</th>
+                        <th scope="col">quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                    <tr class="fs-5 fw-bold">
+                        <td>{{item.title}}</td>
+                        <td>{{item.price}}</td>
+                        <td>{{item.quantity}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <h3 class="fs-3 fw-bold">Item Total: ${{request.session.approved_total}} | Shipping total: ${{request.session.shipping_total}}</h3>
+        </div>
+
+    </div>
+    <a href="{% url 'payment:payment_intent' %}" class="btn btn-primary fw-bold fs-5">proceed to payment</a>
+</section>
+{% endblock %}

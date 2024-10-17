@@ -1,0 +1,10 @@
+<header class="py-3 mb-4 border-bottom">
+  <div class="container d-flex flex-wrap justify-content-center">
+    {% block search %}
+    <form class="col-12 col-lg-auto mb-3 mb-lg-0">
+      <input type="search" class="form-control" hx-get="{% url 'pages:page' %}" hx-trigger="keyup delay:500ms changed"
+        name="q" hx-target="#content" placeholder="Search categories" aria-label="Search" />
+    </form>
+    {% endblock %}
+  </div>
+</header>

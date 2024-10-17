@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Buy something and comeback!{% endblock %}
+
+{% block bottom_nav %}
+{% endblock %}
+
+{% block content %}
+<section>
+    <h1 class="text-center fs-1  display-1 fw-bolder mb-5">No item in cart</h1>
+    <div class="text-center">
+        <a class="btn fs-2 fw-bolder border border-3 mx-2 btn-lg" href="{% url 'cart:cart' %}">
+            <i class="bi bi-cart"></i>
+            Cart
+        </a>
+        <a class="btn fs-2 fw-bolder border border-3 mx-2 btn-lg" href="{% url 'pages:page' %}">
+            <i class="bi bi-shop"></i>
+            Stores
+        </a>
+    </div>
+</section>
+{% endblock content %}

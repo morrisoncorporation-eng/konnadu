@@ -1,0 +1,56 @@
+{% load widget_tweaks %}
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Image</th>
+                <th scope="col">Title</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">shipping cost</th>
+                <th scope="col">Status</th>
+                <th scope="col">Action</th>
+                <th scope="col">Reason</th>
+                <th scope="col">Execute</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in carts %}
+            <form action="" method="post" class="action-form">
+                <input type="hidden" name="cart_id" value="{{item.id}}">
+                {% csrf_token %}
+                <tr id=tr-{{item.id}}>
+                    <td><img class="img-fluid" width="50" height="50" src="{{item.image}}" alt="{{item.title}}">
+                    </td>
+                    <td><a class="text-decoration-none"
+                            href="{% url 'cart:cart-detail' cart_id=item.id %}">{{item.title|truncatechars:15}}</a>
+                    </td>
+                    <td>{{item.price}}</td>
+                    <td>{{item.quantity}}</td>
+                    <td>
+                        <input class="form-control" type="number" name="shipping" value={{item.shipping_fee}}>
+                    </td>
+                    <td>{{item.get_status_display}}</td>
+                    <td>
+                        {% render_field cart_action.cart_status class="form-select" %}
+                    </td>
+                    <td>
+                        <textarea class="form-control" name="reason" rows="3">{{item.reason}}</textarea>
+                    </td>
+                    <td>
+                        <input type="submit" value="execute" class="btn btn-success">
+                        <!-- <button type="submit"></button> -->
+                    </td>
+                </tr>
+            </form>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="7">
+                    <span class="">Total:</span>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>

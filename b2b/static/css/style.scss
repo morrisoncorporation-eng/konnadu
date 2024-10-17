@@ -1,0 +1,53 @@
+@import "node_modules/bootstrap/scss/bootstrap";
+
+
+.main{
+    margin-top:2rem;
+    margin-bottom: 2rem;
+}
+.errorlist li{
+    color:tomato;
+}
+
+section{
+    min-height: 100vh;
+    padding:2rem;
+}
+
+.header{
+    min-height: 100vh;
+    padding:2rem;
+    background-image: url("images/header_bg.svg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    h1, h2, h3, h4, h5, h6 {
+        font-size: 24px;
+        color: white;
+        line-height:5px;
+    };
+    p{
+        color: white;
+        padding: 10px;
+    }
+
+}
+.card-page{
+    width:  100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.bi-twitter-footer
+.bi-facebook-footer
+.bi-instagram-footer{
+    width:24px;
+    height: 24px;
+}
+
+iframe {
+    display: block;       /* iframes are inline by default */
+    background: #000;
+    border: none;         /* Reset default border */
+    height: 100vh;        /* Viewport-relative units */
+    width: 100vw;
+}

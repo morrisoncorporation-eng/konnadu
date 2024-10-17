@@ -1,0 +1,57 @@
+{% load flatpages %}
+{% get_flatpages as flatpages %}
+<nav class="py-2 bg-header-white sticky-top">
+  <div class="container d-flex flex-wrap my-2 fs-5">
+    <ul class="nav me-auto">
+      <li class="nav-item">
+        <a class="navbar-brand fs-2" href="/">Ayopa</a>
+      </li>
+      <li class="nav-item"><a href="{% url 'pages:page' %}" class="btn fs-5 fw-bold border-3"
+          aria-current="page">Home</a></li>
+      <li class="nav-item"><a href="#" class="btn fs-5 fw-bold border-3">Features</a></li>
+      <li class="nav-item"><a href="{% url 'payment:payment_intent' %}" class="btn fs-5 fw-bold border-3">Pay</a></li>
+      {% for page in flatpages %}
+      <li class="btn fs-5 fw-bold border-3"><a href="/pages{{page.url}}"
+          class="btn fs-5 fw-bold border-3">{{page.title|capfirst}}</a></li>
+      {% endfor %}
+      <li class="nav-item">
+        <a class="btn btn-primary fs-5 fw-bold" href="{% url 'pages:download' %}">Download plugin</a>
+      </li>
+    </ul>
+    <ul class="nav">
+      {% if request.user.is_authenticated %}
+      <li class="nav-item"><a href="{% url 'account_logout' %}" class="btn fs-5 fw-bold border-3">Logout</a></li>
+      <li class="position-relative">
+        <a href="{% url 'cart:cart' %}" class="btn fs-5 fw-bold border-3">
+          Cart
+          <span class="position-absolute top-1 start-100 translate-middle badge rounded-pill bg-danger">
+            {% if cart.count %}{{cart.count}}{% else %}0{% endif %}
+            <span class="visually-hidden">items in cart</span>
+          </span>
+        </a>
+      </li>
+      <li class="nav-item ms-2"><a href="{% url 'customer:profile' %}"
+          class="btn fs-5 fw-bold border-3">({{request.user.username}})</a></li>
+      {% if request.user.is_superuser %}
+      <li class="nav-item ms-2">
+        <a href="{% url 'dashboard:dashboard-carts' %}" class="btn fs-5 fw-bold border-3 px-2">
+          Dashboard
+          {% if new_cart_arrival.count > 0 %}
+          <span class="text-success">
+            <i class="bi bi-bell-fill"></i>
+          </span>
+          {% else %}
+          {% endif %}
+        </a>
+      </li>
+      {% endif %}
+      {% else %}
+      <li class="nav-item"><a href="{% url 'account_login' %}" class="nav-link link-dark px-2 fw-bold fs-5">Login</a>
+      </li>
+      <li class="nav-item"><a class="btn btn-primary fs-5 fw-bold" href="{% url 'account_signup' %}" class="nav-link link-dark px-2 fw-bold fs-5">Sign up</a>
+      </li>
+
+      {% endif %}
+    </ul>
+  </div>
+</nav>

@@ -1,0 +1,22 @@
+{% if cart %}
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">image</th>
+            <th scope="col">title</th>
+            <th scope="col">quantity</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in cart %}
+        <tr>
+            <td><img class="img-fluid" width="100" height="100" src="{{item.image}}" /></td>
+            <td>{{item.title}}</td>
+            <td>{{item.quantity}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<h3 class="text-center my-auto"> No item(s) found</h3>
+{% endif %}

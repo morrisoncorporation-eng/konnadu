@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+{% block title %}Cart{%endblock %}
+{% block extra_head %}
+<style>
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<section>
+    {% if cart_items %}
+    <h3 class="fs-3 fw-bold">Cart</h3>
+    <div class="notification"></div>
+    <div class="col col-sm-12 col-md-12">
+        <div class="col-lg-4 col-sm-12 col-md-12 fs-5 fw-bold">
+            <form action="" class="my-5" method="post" id="actionForm">
+                {% csrf_token %}
+
+                <div class="d-flex">
+                    <label for="action" class="mb-0">Actions</label>
+                    <div class="ms-auto mb-0 d-none" id="spinner" style="width:30px;">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <select name="action" id="action" class="form-select fs-5 fw-bold">
+                        <option value="delete">Delete</option>
+                        <option value="update">Update</option>
+                    </select>
+                    <button class="btn btn-primary fs-5 fw-bold" id="select-btn" disabled>select</button>
+                </div>
+            </form>
+
+        </div>
+        <table class="table text-muted">
+            <thead>
+                <tr>
+                    <th scope="col" class="fs-5 fw-bold">select</th>
+                    <th scope="col" class="fs-5 fw-bold">img</th>
+                    <th scope="col" class="fs-5 fw-bold">shop</th>
+                    <th scope="col" class="fs-5 fw-bold">title</th>
+                    <th scope="col" class="fs-5 fw-bold">price</th>
+                    <th scope="col" class="fs-5 fw-bold">qty</th>
+                    <th scope="col" class="fs-5 fw-bold">status</th>
+                    <th scope="col" class="fs-5 fw-bold">shipping fee</th>
+                    <th scope="col" class="fs-5 fw-bold">shipping</th>
+                </tr>
+            </thead>
+            <tbody>
+                <form action="{% url 'order:create' %}" method="post" id="cartForm">
+                    {% csrf_token %}
+                    {% for item in cart_items %}
+                    <input type="hidden" name="cartobj" value="{{item.id}}" />
+                    <tr class="{{item.get_css_class}}" id="{{item.id}}">
+                        <td class="fs-5 fw-bold">
+                            <input type="checkbox" class="form-check-input select-action" value="{{item.id}}">
+                        </td>
+                        <td scope="row" class="fs-5 fw-bold"><img class="img-fluid" width="50" height="50"
+                                src="{{item.image}}" /></td>
+                        <td class="fs-5 fw-bold">{{item.shop_name}}</td>
+                        <td class="fs-5 fw-bold">{{item.title}}</td>
+                        <td class="fs-5 fw-bold"><span class="me-1">{{item.get_symbol}}</span>{{item.price}}</td>
+
+                        <td class="fs-5 fw-bold">
+                            <input class="form-control fs-5 fw-bold w-50 quantity" data-id="{{item.id}}" type="number"
+                                value="{{item.quantity}}">
+                        </td>
+                        <td class="status fs-5 fw-bold">{{item.get_cart_status_display}}</td>
+                        <td class="status fs-5 fw-bold">{% if shipping_fee != "" %}${{item.shipping_fee}}{% else %}$0.00{% endif %}</td>
+                        <td class="status fs-5 fw-bold">{{item.is_shipping}}</td>
+                    </tr>
+                    {% endfor %}
+            <tfoot>
+                <td class="fs-5 fw-bold">
+                    <input type="submit" value="Checkout" class="btn btn-primary fs-5 fw-bold"
+                        {% if not approved %}disabled{% else %}{% endif %}>
+                </td>
+                <td class="fs-5 fw-bold">
+                    <a class="btn btn-primary fs-5 fw-bold" href="{% url 'pages:page' %}">Stores</a>
+                </td>
+
+                <td class="fs-5 fw-bold ms-auto" colspan="6">
+                    <span class="fs-5 fw-bold offset-lg-3">
+                        <span class="text-success border border-1 p-3 rounded-0">Approved Total ${{approved_total}}</span> 
+                        <span class="text-primary border border-1 p-3 rounded-0">Total: ${{cart_sum}}</span>
+                    </span>
+                </td>
+            </tfoot>
+            </form>
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <h1 class=" text-center fw-bold">Your cart is empty!</h1>
+    {% endif %}
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const actionForm = document.getElementById("actionForm");
+    const checkbox = document.querySelectorAll(".select-action");
+    const btn = document.getElementById("select-btn");
+    const checked = new Array();
+    checkbox.forEach(element => {
+        element.addEventListener("change", function (e) {
+            if (element.checked) {
+                checked.push(element)
+                if (checked.length > 0) {
+                    btn.disabled = false;
+                }
+            } else {
+                checked.pop()
+                if (checked.length == 0) {
+                    btn.disabled = true;
+                }
+            }
+        })
+    })
+
+    actionForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const spinner = document.getElementById("spinner");
+        const selected = document.querySelectorAll(".select-action")
+        const formData = new FormData(actionForm)
+        const action = formData.get("action")
+        const selectedItems = new Array()
+        spinner.classList.remove("d-none");
+
+
+        console.log(checkbox)
+        if (action === "delete") {
+            selected.forEach(element => {
+                if (element.checked) {
+                    selectedItems.push(element.value)
+                }
+            })
+
+        } else if (action === "update") {
+            const quantity = document.querySelectorAll(".quantity");
+            quantity.forEach(qty => {
+                const item = {
+                    id: qty.dataset.id,
+                    qty: qty.value,
+                }
+                selectedItems.push(item)
+            })
+        }
+        fetch("{% url 'cart:action' %}", {
+            method: "POST",
+            body: JSON.stringify({
+                action: action,
+                items: selectedItems,
+            })
+        }).then(response => {
+            spinner.classList.add("d-none");
+            return response.json()
+        }).then(data => {
+            console.log(data)
+            Swal.fire({
+                title: `Successfully ${data.action}d`,
+                text: `${data.action} ${data.message}`,
+                icon: 'success',
+                confirmButtonText: 'Ok'
+            })
+            const deleted = data.deleted
+            if (deleted.length > 0) {
+                deleted.forEach(id => {
+                    const tr = document.getElementById(`${id}`)
+                    tr.remove();
+                })
+            }
+        }).catch(error => {
+            spinner.classList.add("d-none");
+            console.log(error)
+        })
+    })
+</script>
+{% endblock %}

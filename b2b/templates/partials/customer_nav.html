@@ -1,0 +1,13 @@
+<nav class="container my-3">
+    <ul class="nav nav-pills nav-fill">
+        <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.view_name == 'customer:profile' %} active {% endif %}" aria-current="page" href="{% url 'customer:profile' %}">My info</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.view_name == 'customer:order-history' %}active {% endif %}" href="{% url 'customer:order-history' %}">Order history</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.view_name == 'order:orders' %}active {% endif %}" href="{% url 'order:orders' %}">My order</a>
+        </li>
+    </ul>
+</nav>

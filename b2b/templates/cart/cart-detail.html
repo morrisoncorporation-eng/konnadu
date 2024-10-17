@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block bottom_nav %}
+{% endblock %}
+{% load widget_tweaks %}
+
+{% block content %}
+<section>
+    {% for field in form %}
+    {% if field.name == "cancel" %}
+    <label class="fs-5 fw-bold" for="{{field.id_for_label}}">{{field.label_tag}}</label>
+    {% render_field field class+="my-2 fs-5 fw-bold" %}
+    {% elif field.name == "ordered" %}
+    <label class="fs-5 fw-bold" for="{{field.id_for_label}}">{{field.label_tag}}</label>
+    {% render_field field class+="my-2 fs-5 fw-bold" %}<br>
+    {% else %}
+    <label class="fs-5 fw-bold" for="{{field.id_for_label}}">{{field.label_tag}}</label>
+    {% render_field field class+="form-control my-2 fs-5 fw-bold" %}
+    {% endif %}
+    {% endfor %}
+    <input class="btn btn-primary fs-5 fw-bold" type="submit" value="update">
+</section>
+{% endblock %}

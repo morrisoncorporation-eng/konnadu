@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %} Dashboard {% endblock %}
+
+{% block bottom_nav %}
+{% endblock %}
+
+{% block content %}
+<section>
+    <div class="row">
+        <div class="col-lg-2">
+            {% include 'dashboard/partials/sidebar.html' %}
+        </div>
+        
+        <div class="col-lg-10 mb-2">
+            <div class="row justify-content-center d-flex">
+                <div class="card col-lg-3 text-center">
+                    <div class="card-body">
+                        <h4 class="card-title text-muted fs-4 fw-bolder">Disabled</h4>
+                        <h5 class="text-center">{{disabled}}</h5>
+                    </div>
+                </div>
+                <div class="card col-lg-3">
+                    <div class="card-body text-center">
+                        <h4 class="card-title text-muted fs-4 fw-bolder">Cancelled</h4>
+                        <h5 class="text-center">{{cancelled}}</h5>
+                    </div>
+                </div>
+                <div class="card col-lg-3">
+                    <div class="card-body text-center">
+                        <h4 class="card-title text-muted fs-4 fw-bolder">Pending</h4>
+                        <h5 class="text-center">{{pending}}</h5>
+                    </div>
+                </div>
+                <div class="card col-lg-3">
+                    <div class="card-body text-center">
+                        <h4 class="card-title text-muted fs-4 fw-bolder">Approved</h4>
+                        <h5 class="text-center">{{approved}}</h5>
+                    </div>
+                </div>
+                <!-- <h3 class="text-center my-3">Sales</h3> -->
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

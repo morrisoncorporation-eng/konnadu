@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% load solo_tags %}
+{% get_solo 'main.SiteConfiguration' as site_config %}
+{% block title %} Dashboard {% endblock %}
+
+
+
+{% block bottom_nav %}
+<nav class="container mx-5 border-bottom">
+    <form hx-get="/dashboard/orders/">
+        <div class="row p-3 g-1">
+            {% for field in form %}
+            <div class="col-lg-3">
+                {% if field.name == "status" %}
+                <label class="text-muted" for="{{field.id_for_label}}">{{field.label}}:</label>
+                {% render_field field class+="form-select text-muted" placeholder=field.help_text hx-trigger="change" hx-get="/dashboard/order/summary/" hx-target="#items" %}
+                {% elif field.name == "created_date" %}
+                <label class="text-muted" for="{{field.id_for_label}}">{{field.label}}:</label>
+                {% render_field field class+="form-select" placeholder=field.help_text hx-trigger="input" hx-get="/dashboard/order/summary/" hx-target="#items" %}
+                {% elif field.name == "order_number" %}
+                <label class="text-muted" for="{{field.id_for_label}}">{{field.label}}:</label>
+                {% render_field field class+="form-control" placeholder=field.help_text hx-trigger="keyup changed delay:500ms" hx-get="/dashboard/order/summary/" hx-target="#items" %}
+                {% elif field.name == "customer" %}
+                <label class="text-muted" for="{{field.id_for_label}}">{{field.label}}:</label>
+                {% render_field field class+="form-control" placeholder=field.help_text hx-trigger="keyup changed delay:500ms" hx-get="/dashboard/order/summary/" hx-target="#items" %}
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </form>
+
+</nav>
+
+{% endblock %}
+
+{% block content %}
+<section>
+    <div class="row">
+        <div class="col-lg-2">
+            {% include 'dashboard/partials/sidebar.html' %}
+        </div>
+        <div class="col-lg-10" id="items">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th class="fs-5 fw-bold" scope="col">Created</th>
+                        <th class="fs-5 fw-bold" scope="col">Customer</th>
+                        <th class="fs-5 fw-bold" scope="col">Order ID</th>
+                        <th class="fs-5 fw-bold" scope="col">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in order_summary %}
+                        <tr>
+                            <td class="fs-5 fw-bold">{{item.created_date}}</td>
+                            <td class="fs-5 fw-bold">{{item.customer}}</td>
+                            <td class="fs-5 fw-bold border border-3 border-warning">{{item.order_id}}</td>
+                            <td class="fs-5 fw-bold">{{item.get_status_display}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="7">
+                            <span class="fs-5 fw-bold text-success">Total:</span>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center mt-5">
+        {% include 'partials/pagination.html' with page_obj=order_summary %}
+    </div>
+</section>
+{% endblock %}

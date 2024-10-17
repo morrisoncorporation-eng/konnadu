@@ -1,0 +1,42 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "==3.2.7"
+pillow = "*"
+django-cors-headers = "*"
+djangorestframework = "*"
+whitenoise = "*"
+dj-database-url = "*"
+psycopg2-binary = "*"
+python-dotenv = "*"
+django-solo = "*"
+django-countries = "*"
+dj-stripe = "*"
+django-phonenumber-field = {extras = ["phonenumberslite"], version = "*"}
+gunicorn = "*"
+django-allauth = "*"
+django-cloudinary-storage = "*"
+django-widget-tweaks = "*"
+django-htmx = "*"
+scrapy = "*"
+django-tempus-dominus = "*"
+coinbase-commerce = "==1.0.1"
+django-tinymce = "*"
+django-newsletter = "*"
+pyyaml = "*"
+ua-parser = "*"
+user-agents = "*"
+django-user-agents = "*"
+python-memcached = "*"
+
+[dev-packages]
+black = "*"
+
+[requires]
+python_version = "3.9"
+
+[pipenv]
+allow_prereleases = true

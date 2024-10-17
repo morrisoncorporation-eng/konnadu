@@ -1,0 +1,85 @@
+{% extends  "base.html" %}
+{% block title %} Order created {% endblock %}
+
+{% block bottom_nav %}
+{% include "partials/customer_nav.html" %}
+{% endblock %}
+
+{% block content %}
+{% if order %}
+<section>
+    <div class="notification"></div>
+    <div class="row">
+        <div class="col-lg-3">
+            {% include 'customer/partials/customer_sidebar.html' %}
+        </div>
+        <div class="col-lg-9" id="table">
+            <table class="table">
+                <thead>
+                    <tr class="fs-5 fw-bold">
+                        <th scope="col">image</th>
+                        <th scope="col">title</th>
+                        <th scope="col">price</th>
+                        <th scope="col">quantity</th>
+                        <th scope="col">order number</th>
+                        <th scope="col">status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                    <tr class="fs-5 fw-bold item" data-id="{{item.id}}">
+                        <td><img class="img-fluid" width="100" height="100" src="{{item.image}}" alt="{{item.title}}">
+                        </td>
+                        <td>{{item.title}}</td>
+                        <td>{{item.price}}</td>
+                        <td>{{item.quantity}}</td>
+                        <td>{{item.order}}</td>
+                        <td>{{item.get_cart_status_display}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <h3 class="fs-3 fw-bolder">Total: {{request.session.approved_total}} | shipping total:
+                {{request.session.shipping_total}}</h3>
+            <form action="{% url 'shipping:shipping-index' %}" method="post" id="shipping">
+                {% csrf_token %}
+                <input type="hidden" name="order-id" value={{order.order_id}}>
+                <input type="submit" value="Continue to shipping" class="btn btn-primary fs-5 fw-bold">
+            </form>
+        </div>
+    </div>
+
+</section>
+{% else %}
+<section>
+    <h1 class="text-center">No order(s) yet start shopping. go to <a href="/">Stores</a></h1>
+</section>
+{% endif %}
+{% endblock %}
+{% block scripts %}
+<script>
+    const shipping = document.getElementById("shipping");
+    const ids = document.querySelectorAll(".item");
+    console.log(ids)
+    shipping.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const idArray = []
+        ids.forEach(id => {
+            idArray.push(id.dataset.id);
+        })
+        console.log(ids)
+        fetch('/shipping/', {
+                method: "POST",
+                body: JSON.stringify(idArray)
+            })
+            .then(res => {
+                return res.json()
+            })
+            .then(data => {
+                location.href = "/shipping/"
+            }).catch(err => {
+                console.log(err)
+            })
+    })
+</script>
+{% endblock %}

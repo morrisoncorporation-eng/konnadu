@@ -1,0 +1,13 @@
+<div class="">
+    <h1 class="fw-bolder">Menu</h1>
+    <ul class="list-group">
+        <li class="list-group-item list-group-item-action"> <a class="fs-5 fw-bold btn"
+                href="{% url 'dashboard:index' %}">Dashboard</a></li>
+        <li class="list-group-item list-group-item-action list-group-item-action"> <a class="fs-5 fw-bold btn"
+                href="{% url 'dashboard:dasboard-customers' %}">Customers</a></li>
+        <li class="list-group-item list-group-item-action"><a class="fs-5 fw-bold btn"
+                href="{% url 'dashboard:dashboard-carts' %}">Carts</a></li>
+        <li class="list-group-item list-group-item-action"><a class="fs-5 fw-bold btn"
+                href="{% url 'dashboard:order_summary' %}">All Orders</a></li>
+    </ul>
+</div>

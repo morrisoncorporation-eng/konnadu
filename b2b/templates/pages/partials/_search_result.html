@@ -1,0 +1,13 @@
+<div class="row">
+    {% for store in result %}
+    <div class="col-lg-2 col-md-6 col-sm-12 my-3 rounded-0">
+        <div class="border img-container">
+            <img src="{{store.get_first_image}}" class="image img-fluid w-100 h-auto p-0 m-0" alt="{{store.name}}">
+            {% comment %}
+            <a href="{{store.url}}" data-store="{{store.name}}" target="_blank" class="stretched-link"></a>
+            {% endcomment %}
+        </div>
+        <h5 class="fw-bold">{{store.name}}</h5>
+    </div>
+    {% endfor %}
+</div>

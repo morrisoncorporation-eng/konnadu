@@ -1,0 +1,37 @@
+<nav class="d-flex justify-content-between">
+    <ul class="nav nav-pills">
+        {% for obj in popular %}
+        <form action="" hx-get="{% url 'pages:category' %}" hx-target="#content">
+            <li class="nav-item">
+                <input type="hidden" name="category-id" value="{{obj.id}}">
+                <button class="btn btn-outline-dark fs-5 fw-bold me-2 border border-3" aria-current="page"
+                    href="#">{{obj.title}}</button>
+            </li>
+        </form>
+        {% endfor %}
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle fs-4 fw-bolder btn btn-outline-dark" data-bs-toggle="dropdown" href="#"
+                role="button" aria-expanded="false">More categories</a>
+            <ul class="dropdown-menu" style="min-width:500px;">
+                <div class="row">
+                    {% for category in categories %}
+                    <div class="col-lg-5 justify-content-center">
+                        <form action="" hx-get="{% url 'pages:category' %}" hx-target="#content">
+                            <input type="hidden" name="category-id" value="{{category.id}}">
+                            <button class="fs-5 btn fw-bold">{{category.title}}</button>
+                        </form>
+                    </div>
+                    {% endfor %}
+                </div>
+            </ul>
+        </li>
+    </ul>
+    <form class="ms-auto">
+        <div class="input-group">
+            <input type="search" class="form-control fs-5 fw-bold" hx-get="{% url 'pages:search' %}"
+                hx-trigger="keyup delay:500ms changed" name="q" hx-target="#result" placeholder="Search"
+                aria-label="Search" />
+            <button type="btn" class="btn fw-bold fs-5 border" disabled><i class="bi bi-search"></i></button>
+        </div>
+    </form>
+</nav>

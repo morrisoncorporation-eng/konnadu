@@ -1,0 +1,17 @@
+{% extends  "base.html" %}
+
+{% block content %}
+<section class="row justify-content-center align-items-center bg-light">
+    <h1 class="fs-1 fw-bold text-center">Download plugin for your broswer</h1>
+    <a href="{{url}}" class="btn border btn-light btn-lg w-50 fw-bold {% if disabled %} disabled {% endif %}">
+        Download plugin for 
+        {% if browser == "Chrome" %}
+        <img class="fs-5 img-fluid" width="40" src="https://img.icons8.com/ios/50/000000/chrome--v3.png"/>
+        {% elif browser == "Firefox" %}
+        <img  class="fs-5 img-fluid" width="40" src="https://img.icons8.com/external-tal-revivo-shadow-tal-revivo/96/000000/external-firefox-a-free-and-open-source-web-browser-developed-by-the-mozilla-foundation-logo-shadow-tal-revivo.png"/>
+        {% elif browser == "Opera" %}
+        <img class="fs-5 img-fluid" width="40" src="https://img.icons8.com/ios/50/000000/opera-gx.png"/>
+        {% endif %}
+    </a>
+</section>
+{% endblock %}

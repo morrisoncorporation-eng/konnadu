@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Buy something and comeback!{% endblock %}
+
+{% block content %}
+<section>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card mt-4">
+                <div class="card-body fs-5 fw-bold">
+                    <h5 class="fw-bold fs-5">Total</h5>
+                    <!-- <p class="card-text">
+                        <span>{{ charge.description }}</span>
+                        <br> -->
+                        <span>${{ charge.pricing.local.amount }} {{ charge.pricing.local.currency }}</span>
+                    </p>
+                    <div>
+                        <a class="btn btn-primary w-100 fw-bold" href="{{ charge.hosted_url }}">Purchase</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <h3 class="fs-3 fw-bold">Item(s) in cart</h1>
+
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr class="fs-5 fw-bold">
+                            <th scope="col">image</th>
+                            <th scope="col">title</th>
+                            <th scope="col">price</th>
+                            <th scope="col">quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in cart %}
+                        <tr class="fs-5 fw-bold">
+                            <td><img class="img-fluid" height="50" width="50" src="{{item.image}}" alt="{{item.title}}">
+                            </td>
+                            <td>{{item.title}}</td>
+                            <td>{{item.price}}</td>
+                            <td>{{item.quantity}}</td>
+                        </tr>
+                        {% endfor %}
+                    <tfoot>
+                        <tr class="fs-5 fw-bold">
+                            <td colspan="2" class="fw-bold">Total: {{grand_total}}</td>
+                        </tr>
+                    </tfoot>
+                    </tbody>
+                </table>
+        </div>
+    </div>
+</section>
+{% endblock content %}

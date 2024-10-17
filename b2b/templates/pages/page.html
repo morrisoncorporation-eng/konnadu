@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block extra_head %}
+<style>
+    .bg-special {
+        background-color: #f3f3e0;
+    }
+
+    .btn:hover {
+        background-color: gainsboro;
+    }
+
+    .arrow {
+        cursor: pointer;
+    }
+
+    .image {
+        opacity: 1;
+        display: block;
+        width: 100%;
+        height: auto;
+        transition: .5s ease;
+        backface-visibility: hidden;
+    }
+
+    .img-container:hover .image {
+        opacity: 0.3;
+    }
+    .img-container:hover{
+        background-color:rgb(146, 143, 52);
+        transition: .5s ease;
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+<section class="shop" id="content">
+    {% include 'pages/partials/header.html' with jumbotron=jumbo_one %}
+
+    <div class="row my-5">
+        <div class="col-lg-4 p-3">
+            <h3 class="fw-bold">Use ayoopa everywhere</h3>
+            <p class="fs-4">Lorem ipsum dolor sit amet,
+                consectetur adipisicing elit.
+                Porro, nesciunt?
+                Laborum quo sapiente iste
+            </p>
+            <button class="btn btn-lg btn-primary fs-4">How it works</button>
+        </div>
+        <div class="col-lg-4 p-3">
+            <h3 class="fw-bold">Header 2</h3>
+            <p class="fs-4">
+                Lorem ipsum dolor sit amet,
+                consectetur adipisicing elit.
+                Porro, nesciunt? Laborum quo sapiente iste </p>
+        </div>
+        <div class="col-lg-4 bg-special p-3">
+            <h3 class="fw-bold">Header 3</h3>
+            <p class="fs-4">
+                Lorem ipsum dolor sit amet,
+                consectetur adipisicing elit.
+                Porro, nesciunt? Laborum quo sapiente iste
+                Lorem ipsum dolor sit amet,
+                consectetur adipisicing elit.
+            </p>
+            <a class="btn btn-lg btn-outline-primary fs-4" href="{% url 'account_signup' %}">Sign up now<i
+                    class="bi bi-arrow-right-circle-fill ms-2 mt-1"></i></a>
+        </div>
+    </div>
+    {% include 'pages/partials/_trending.html' with stores=stores %}
+    <div class="my-4 border-bottom w-25 mx-auto"></div>
+    {% include 'pages/partials/_categories.html' with categories=object_list %}
+    {% include 'pages/partials/_popular.html' with popular=popular %}
+    {% include 'pages/partials/_exclusive.html' with exclusive=exclusive %}
+    <hr>
+
+    {% include 'pages/partials/_review.html' %}
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    var splide = new Splide('.splide', {
+        perPage: 3,
+        rewind: true,
+    });
+
+    splide.mount();
+</script>
+{% endblock %}

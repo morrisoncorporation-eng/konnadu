@@ -1,0 +1,6 @@
+db.sqlite3
+.vscode
+.env
+**/node_modules
+media/
+app_info.txt

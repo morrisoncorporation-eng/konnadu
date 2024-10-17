@@ -1,0 +1,12 @@
+<h1 class="fs-1 fw-1 mt-5">Shop by categories</h1>
+<div class="d-flex">
+    {% for category in categories %}
+    <form action="" hx-get="{% url 'pages:category' %}" hx-target="#content">
+        <div class="me-1">
+            <input type="hidden" name="category-id" value="{{category.id}}">
+            <button href="#"
+                class="btn btn-outline-danger btn-lg mx-2 fw-bold fs-5 border border-3">{{category.title}}</button>
+        </div>
+    </form>
+    {% endfor %}
+</div>

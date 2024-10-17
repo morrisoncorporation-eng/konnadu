@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+
+{% block content %}
+<section>
+    <div class="row">
+        <div class="col-lg-3">
+            {% include 'customer/partials/customer_sidebar.html' %}
+        </div>
+        <div class="col-lg-8">
+            <h3 class="fs-3 fw-bold border-bottom mb-5">About me</h3>
+            <div class="d-flex flex-row w-50 justify-content-between fs-5 fw-bold">
+                <span>First name:</span> {% if customer.first_name %}{{customer.first_name}}{% else %}<a
+                    class="fs-5 fw-bold" href="{% url 'customer:update-profile' %}">
+                    <i class="bi bi-pencil-square me-2 text-success"></i>
+                    Update</a>{% endif %}
+            </div>
+            <div class="d-flex flex-row w-50 justify-content-between fs-5 fw-bold">
+                <span>Last name:</span> {% if customer.last_name %}{{customer.last_name}}{% else %}<a
+                    class="fs-5 fw-bold" href="{% url 'customer:update-profile' %}">
+                    <i class="bi bi-pencil-square me-2 text-success"></i>
+                    Update</a>{% endif %}
+            </div>
+            <div class="d-flex flex-row w-50 justify-content-between fs-5 fw-bold">
+                <span>Dob:</span> {% if customer.dob %}{{customer.dob}}{% else %}<a class="fs-5 fw-bold"
+                    href="{% url 'customer:update-profile' %}">
+                    <i class="bi bi-pencil-square me-2 text-success"></i>
+                    Update</a>{% endif %}
+            </div>
+
+
+            <h3 class="fs-3 fw-bold border-bottom my-5">Default shipping address</h3>
+
+            <div class="d-flex fs-5 flex-row w-50 justify-content-between fs-5 fw-bold">
+                <span>Customer: </span>{% if address.customer %}{{address.customer}}{% else %}<a
+                    href="{% url 'address:address_create' %}">
+                    <i class="bi bi-pencil-square me-2 text-success"></i>
+                    Update</a>{% endif %}
+            </div>
+            <div class="d-flex fs-5 flex-row w-50 justify-content-between fs-5 fw-bold">
+                <span> Address: </span>{% if address.address %} {{address.address}}{% else %}<a
+                    href="{% url 'address:address_create' %}">
+                    <i class="bi bi-pencil-square me-2 text-success"></i>
+                    Update</a>{% endif %}
+            </div>
+            <div class="d-flex fs-5 flex-row w-50 justify-content-between fs-5 fw-bold">
+                <span>Phone: </span>{% if address.phone_number %}{{address.phone_number}}{% else %}<a
+                    href="{% url 'address:address_create' %}">
+                    <i class="bi bi-pencil-square me-2 text-success"></i>
+                    Update</a>{% endif %}
+            </div>
+            <div class="d-flex fs-5 flex-row w-50 justify-content-between fs-5 fw-bold">
+                <span>City: </span>{% if address.city %}{{address.city}}{% else %}<a
+                    href="{% url 'address:address_create' %}">
+                    <i class="bi bi-pencil-square me-2 text-success"></i>
+                    Update</a>{% endif %}
+            </div>
+            <div class="d-flex fs-5 flex-row w-50 justify-content-between fs-5 fw-bold">
+                <span>State:</span> {% if address.state %}{{address.stata}}{% else %}<a
+                    href="{% url 'address:address_create' %}">
+                    <i class="bi bi-pencil-square me-2 text-success"></i>
+                    Update</a>{% endif %}
+            </div>
+            <div class="d-flex flex-row w-50 justify-content-between fs-5 fw-bold">
+                <span>Zip or postal:</span>
+                {% if address.zip_code_or_postal_code %}{{address.zip_code_or_postal_code}}{% else %}<a
+                    href="{% url 'address:address_create' %}">
+                    <i class="bi bi-pencil-square text-success"></i>
+                    Update</a>{% endif %}<br>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

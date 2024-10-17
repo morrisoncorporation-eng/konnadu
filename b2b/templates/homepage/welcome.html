@@ -1,0 +1,159 @@
+{% extends "account/base.html" %}
+{% load static %}
+{% load static %}
+{% load solo_tags %}
+{% get_solo 'main.SiteConfiguration' as site_config %}
+{% block navigation %}{% endblock %}
+
+{% block header %}
+<header class="row header">
+    <h1 class="fs-1 fw-bolder">{{site_config.site_name}}</h1>
+    <section class="col-8">
+        <p class="lead my-3">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorem illum quia porro, doloremque dolores.
+        </p>
+    </section>
+</header>
+{% endblock %}
+
+{% block content %}
+
+
+<div class="container">
+    <section class="row my-3">
+        <h3>Some heading texts about what we offer</h3>
+        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat id, nam at labore veniam
+            distinctio facilis suscipit corrupti possimus molestiae incidunt iure animi accusamus consectetur tempora
+            inventore voluptatibus. Praesentium, dolorum.
+            Consequatur deleniti numquam magni commodi hic enim, exercitationem facere excepturi nisi reiciendis dicta
+            saepe suscipit tempore mollitia repellat alias ut praesentium rem placeat sint. Exercitationem recusandae
+            aut consequatur sit impedit.</p>
+        <div class="col-lg-4">
+            <div class="card shadow bg-white rounded" style="width: 100%;">
+                <!-- <img src="..." class="card-img-top" alt="..."> -->
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's content.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card shadow bg-white rounded" style="width: 100%;">
+                <!-- <img src="..." class="card-img-top" alt="..."> -->
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's content.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card shadow bg-white rounded" style="width: 100%;">
+                <!-- <img src="..." class="card-img-top" alt="..."> -->
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's content.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="row my-3">
+        <h3>Testimonials</h3>
+        <p class="lead">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias vero quaerat officia, ipsum nihil aperiam
+            illum recusandae pariatur placeat ex blanditiis odit necessitatibus nisi praesentium voluptas nostrum
+            possimus, nulla earum.
+            Quaerat ducimus dolores sapiente quasi! Consequuntur exercitationem quisquam earum. Reprehenderit nesciunt
+            reiciendis blanditiis voluptate, voluptatem, neque dolor ipsum, praesentium recusandae eos qui nulla
+            excepturi ratione modi quae! Ex, nostrum. Quibusdam.
+            Vitae architecto, nobis, quas explicabo unde exercitationem accusamus quibusdam ex sit illo eum consequatur
+            fugit rem quam excepturi expedita impedit perspiciatis placeat minus reiciendis quo facilis ab aut. Rerum,
+            facilis.
+        </p>
+        <div class="col-lg-3">
+            <div class="card shadow bg-white rounded" style="width: 100%;">
+                <!-- <img src="..." class="card-img-top" alt="..."> -->
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's content.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="card shadow bg-white rounded" style="width: 100%;">
+                <!-- <img src="..." class="card-img-top" alt="..."> -->
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's content.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="card shadow bg-white rounded" style="width: 100%;">
+                <!-- <img src="..." class="card-img-top" alt="..."> -->
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's content.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="card shadow bg-white rounded" style="width: 100%;">
+                <!-- <img src="..." class="card-img-top" alt="..."> -->
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's content.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% comment %}
+    <section class="row">
+        <h2 class="text-center">Payment methods</h2>
+        <div class="col-lg-4">
+            <div class="card" style="width: 100%;">
+                <!-- <img src="..." class="card-img-top" alt="..."> -->
+                <div class="card-body">
+                    <h5 class="card-title">Pay as you go</h5>
+                    <div class="border-bottom w-25 mb-3"></div>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's content.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card" style="width: 100%;">
+                <!-- <img src="..." class="card-img-top" alt="..."> -->
+                <div class="card-body">
+                    <h5 class="card-title">Silver</h5>
+                    <div class="border-bottom w-25 mb-3"></div>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's content.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card" style="width: 100%;">
+                <!-- <img src="..." class="card-img-top" alt="..."> -->
+                <div class="card-body">
+                    <h5 class="card-title">Gold</h5>
+                    <div class="border-bottom w-25 mb-3"></div>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's content.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endcomment %}
+    <p class="text-center">
+        <a class="btn btn-primary d-inline-block" href="{% url 'pages:page' %}">Start shopping</a>
+    </p>
+
+</div>
+{% endblock %}`

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+<section>
+    <div class="row">
+        <div class="col-lg-3">
+            {% include 'customer/partials/customer_sidebar.html' %}
+        </div>
+        <div class="col-lg-3">
+            <h3 class="fs-3 fw-bold border-bottom mb-2">Address List</h3>
+            <ul class="list-group">
+                {% for address in addresses %}
+                <li class="list-group-item"><span class="fs fw-bold">Address:</span> {{address.address}}</li>
+                <li class="list-group-item"><span class="fs fw-bold">Phone Number:</span> {{address.phone_number}}</li>
+                <li class="list-group-item"><span class="fs fw-bold">Country:</span> {{address.country.name}}</li>
+                {% if address.default %}
+                <li class="bg-success text-white p-2 fs-5 fw-bold">In use</li>
+                {% else %}
+                <li class="list-group-item">
+                    <form class="mt-3" method="post" action="{% url 'address:address_default' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="address_id" value="{{address.id}}">
+                        <input type="submit" value="set as default" class="btn btn-primary fs-5 fw-bold">
+                    </form>
+                </li>
+                {% endif %}
+                <hr>
+                {% empty %}
+                <li class="mt-3">You don't have address added</li>
+                {% endfor %}
+            </ul>
+
+        </div>
+        <div class="col-lg-6">
+            <h3 class="fs-3 fw-bold border-bottom">Add or update</h3>
+            <form action="" method="post" class="ms-auto col-sm-12 col-lg-12 col-md-8 mt-3">
+                {% csrf_token %}
+                {% for field in form %}
+                <label class="fs-5 fw-bold" for="{{field.id_for_label}}">{{field.label}}</label>
+                {% if field.name == "default" %}
+                {% render_field field  class="form-check-input d-block mb-2 fs-5 fw-bold" %}
+                {% else %}
+                {% render_field field class="form-control mb-2 fs-5 fw-bold" %}
+                {% endif %}
+                {% endfor %}
+
+                {% if form.errors %}
+                {% for field in form %}
+                {% for error in field.errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+                {% endfor %}
+                {% endfor %}
+                {% endif %}
+                <input type="submit" value="Create" class="my-2 btn btn-primary fs-5 fw-bold">
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% if form.errors %}
+{% for field in form %}
+{% for error in field.errors %}
+<div class="alert alert-danger">
+    <strong>{{ error|escape }}</strong>
+</div>
+{% endfor %}
+{% endfor %}
+{% endif %}

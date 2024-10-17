@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+
+{% block content %}
+<section>
+    <div class="row">
+        <div class="col-lg-3">
+            {% include 'customer/partials/customer_sidebar.html' %}
+        </div>
+        <div class="col-lg-8">
+            <table class="table table-striped">
+                <thead>
+                    <tr class="fs-5 fw-bold">
+                        <th>Customer</th>
+                        <th>Order ID</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr class="fs-5 fw-bold">
+                        <td>{{order.customer}}</td>
+                        <td>{{order.order_id}}</td>
+                        <td>{{order.get_status_display}}</td>
+                        <td>{{order.created_date}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-center">
+                {% include 'partials/pagination.html' with page_obj=orders %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

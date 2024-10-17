@@ -1,0 +1,1 @@
+amazon.com, Aliexpress.com, Ebay.com, Target.com, Walmart.com, bestbuy.com, nike.com. addidas.com, footlocker.com, apple.com, samsung.com, homedepot.com

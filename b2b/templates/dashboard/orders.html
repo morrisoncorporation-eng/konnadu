@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% load solo_tags %}
+{% get_solo 'main.SiteConfiguration' as site_config %}
+{% block title %} Dashboard {% endblock %}
+
+
+
+{% block bottom_nav %}
+<nav class="container mx-5 border-bottom">
+    <form hx-get="/dashboard/orders/">
+        <div class="row p-3 g-1">
+            {% for field in form %}
+            <div class="col-lg-3">
+                {% if field.name == "cart_status" %}
+                <label class="text-muted" for="{{field.id_for_label}}">{{field.label}}:</label>
+                {% render_field field class+="form-select text-muted" placeholder=field.help_text hx-trigger="change" hx-get="/dashboard/dashboard-carts/" hx-target="#items" %}
+                {% elif field.name == "created" %}
+                <label class="text-muted" for="{{field.id_for_label}}">{{field.label}}:</label>
+                {% render_field field class+="form-select" placeholder=field.help_text hx-trigger="input" hx-get="/dashboard/dashboard-carts/" hx-target="#items" %}
+                {% elif field.name == "customer" %}
+                <label class="text-muted" for="{{field.id_for_label}}">{{field.label}}:</label>
+                {% render_field field class+="form-control" placeholder=field.help_text hx-trigger="keyup changed delay:500ms" hx-get="/dashboard/dashboard-carts/" hx-target="#items" %}
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </form>
+
+</nav>
+
+{% endblock %}
+
+{% block content %}
+<section>
+    <div class="row">
+        <div class="col-lg-2">
+            {% include 'dashboard/partials/sidebar.html' %}
+        </div>
+        <div class="col-lg-10" id="items">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col" class="fs-5 fw-bold">image</th>
+                        <th scope="col" class="fs-5 fw-bold">title</th>
+                        <th scope="col" class="fs-5 fw-bold">price</th>
+                        <th scope="col" class="fs-5 fw-bold">quantity</th>
+                        <th scope="col" class="fs-5 fw-bold">shipping cost</th>
+                        <th scope="col" class="fs-5 fw-bold">status</th>
+                        <th scope="col" class="fs-5 fw-bold">action</th>
+                        <th scope="col" class="fs-5 fw-bold">reason</th>
+                        <th scope="col" class="fs-5 fw-bold">execute</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in carts %}
+                    <form action="" method="post" class="action-form">
+                        <input type="hidden" name="cart_id" value="{{item.id}}">
+                        {% csrf_token %}
+                        <tr id=tr-{{item.id}}>
+                            <td class="fs-5 fw-bold"><img class="img-fluid" width="50" height="50" src="{{item.image}}" alt="{{item.title}}">
+                            </td>
+                            <td class="fs-5 fw-bold"><a class="text-decoration-none"
+                                    href="{% url 'cart:cart-detail' cart_id=item.id %}">{{item.title|truncatechars:15}}</a>
+                            </td>
+                            <td class="fs-5 fw-bold">{{item.price}}</td>
+                            <td class="fs-5 fw-bold">{{item.quantity}}</td>
+                            <td class="fs-5 fw-bold">
+                                <input class="form-control fs-5 fw-bold" type="number" name="shipping" value={{item.shipping_fee}} required>
+                            </td>
+                            <td class="fs-5 fw-bold">{{item.get_status_display}}</td>
+                            <td class="fs-5 fw-bold">
+                                {% render_field cart_action.cart_status class="form-select fs-5 fw-bold" %}
+                            </td>
+                            <td>
+                                <textarea class="form-control fs-5 fw-bold" name="reason" rows="3" required>{{item.reason}}</textarea>
+                            </td>
+                            <td>
+                                <input type="submit" value="execute" class="btn btn-success fs-5 fw-bold">
+                                <!-- <button type="submit"></button> -->
+                            </td>
+                        </tr>
+                    </form>
+                    {% endfor %}
+
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="7" class="fs-5 fw-bold">
+                            <span class="">Total:</span>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center">
+        {% include 'partials/pagination.html' with page_obj=carts %}
+    </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script>
+    const actionForm = document.querySelectorAll(".action-form");
+    actionForm.forEach(action => {
+        action.addEventListener("submit", function (e) {
+            e.preventDefault();
+            formData = new FormData(action)
+            fetch('/dashboard/dashboard-carts/', {
+                method: "POST",
+                body: formData
+            }).then(res => {
+                return res.json()
+            }).then(data => {
+                container = "tr-" + `${data.cart}`
+                const tr = document.getElementById(container)
+                console.log(data)
+                tr.classList.add("bg-success");
+            }).catch(err => {
+                console.log(err)
+            })
+        })
+    })
+</script>
+{% endblock %}
