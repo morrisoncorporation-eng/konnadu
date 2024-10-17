@@ -1,0 +1,82 @@
+{
+    "manifest_version": 2,
+
+    "name": "Ayopa store",
+    "author": "Ayopa store development",
+    "description": "Ayopa store multi ecommerce store plugin",
+    "version": "1.0",
+    "icons": {
+        "16": "./favicon-16x16.png",
+        "32": "./favicon-32x32.png"
+    },
+
+    "background": {
+        "scripts": ["./background.js"]
+    },
+    "browser_action": {
+        "default_popup": "./popup.html",
+        "default_icons": {
+            "16": "./favicon-16x16.png",
+            "32": "./favicon-32x32.png"
+        }
+    },
+    "content_scripts": [{
+            "matches": ["*://*.amazon.com/gp/cart/view.html*"],
+            "js": ["./markets/amazon.js"]
+
+        },
+        {
+            "matches": ["*://*.shoppingcart.aliexpress.com/shopcart/shopcartDetail.htm*"],
+            "js": ["./markets/aliexpress.js"]
+
+        },
+        {
+            "matches": ["*://*.walmart.com/*"],
+            "js": ["./markets/walmart.js"]
+
+        },
+        {
+            "matches": ["*://*.cart.payments.ebay.com/*"],
+            "js": ["./markets/ebay.js"]
+
+        },
+        {
+            "matches": ["*://*.adidas.com/us/cart*"],
+            "js": ["./markets/adidas.js"]
+
+        },
+        {
+            "matches": ["*://*.nike.com/cart*"],
+            "js": ["./markets/nike.js"]
+
+        },
+        {
+            "matches": ["*://*.footlocker.co.uk/*", "*://*.footlocker.co.uk/en/*"],
+            "js": ["./markets/footlocker.js"]
+
+        },
+        {
+            "matches": ["*://*.bestbuy.com/cart*"],
+            "js": ["./markets/bestbuy.js"]
+
+        },
+        {
+            "matches": ["*://*.apple.com/shop/bag*"],
+            "js": ["markets/apple.js"]
+
+        },
+        {
+            "matches": ["*://*.samsung.com/us/web/express/cart/*"],
+            "js": ["markets/samsung.js"]
+
+        }
+    ],
+    "permissions": [
+        "tabs",
+        "activeTab",
+        "storage",
+        "http://localhost:8000/*",
+        "http://dj-b2b.herokuapp.com/*",
+        "https://dj-b2b.herokuapp.com/*"
+    ]
+}
