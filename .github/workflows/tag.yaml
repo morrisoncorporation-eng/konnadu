@@ -41,3 +41,15 @@ jobs:
           increment: ${{ steps.committype.outputs.commit_type }}  #Manually specify the desired increment {MAJOR,MINOR, PATCH}
       - name: Print Version
         run: echo "Bumped to version ${{ steps.cz.outputs.version }}"
+
+
+      - name: Release Tag
+        # You may pin to the exact commit or the version.
+        # uses: Akryum/release-tag@01f55b5917052ed0c91be13abdb7a23ccd103d90
+        uses: Akryum/release-tag@v4.0.3
+        with:
+          # The name of the tag. This should come from the webhook payload, `github.GITHUB_REF` when a user pushes a new tag
+          tag_name:  ${{ steps.cz.outputs.tag }}
+          # The name of the release. For example, `Release v1.0.1`
+          release_name: ${{ steps.cz.outputs.tag }}
+          # Conventional changelog preset. Possible values: 'angular', 'atom', 'codemirror', 'ember', 'eslint', 'express', 'jquery', 'jshint'
