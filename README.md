@@ -1,4 +1,4 @@
 adding a readme file
 updated the file
 new updated
-sample update
+sample upd
