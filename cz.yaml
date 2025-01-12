@@ -24,7 +24,7 @@ commitizen:
   - - disabled
     - fg:#858585 italic
   tag_format: $version
-  version: 0.3.1
+  version: 0.3.2
   version_files:
   - cz.yaml
   version_scheme: semver
