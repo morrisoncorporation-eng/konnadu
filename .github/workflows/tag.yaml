@@ -23,9 +23,9 @@ jobs:
 
           if [[ $COMMIT_MESSAGE == *"major"* || $COMMIT_MESSAGE == *!* ]]; then
             COMMIT_TYPE="major"
-          elif [[ $COMMIT_MESSAGE == *"feat"* ||
-                  $COMMIT_MESSAGE == *"feature"* ]]; then
-            COMMIT_TYPE="minor"
+          # elif [[ $COMMIT_MESSAGE == *"feat"* ||
+          #         $COMMIT_MESSAGE == *"feature"* ]]; then
+          #   COMMIT_TYPE="minor"
           else
             COMMIT_TYPE="patch"  # Default to patch if no specific message is found
           fi
