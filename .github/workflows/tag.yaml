@@ -1,43 +1,27 @@
-name: Bump Module Version
+# example 2: on merge to master from pull request (recommended)
+name: Bump version
 on:
-  push:
+  pull_request:
+    types:
+      - closed
     branches:
-      - main
+      - master
 
 jobs:
-  bump_version:
-    if: "!startsWith(github.event.head_commit.message, 'bump:')" # Prevents from bumping on its own push
-    runs-on: ubuntu-latest
-    name: "Bump version and create changelog with commitizen"
+  build:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
     steps:
-      - name: Check out
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          token: "${{ secrets.SVC_GITHUB_TOKEN }}"
-   
-      - name: check the commit
-        id: committype
-        run: |
-          COMMIT_MESSAGE=$(git log -n 1 --pretty=format:"%s")
+    - uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.pull_request.merge_commit_sha }}
+        fetch-depth: '0'
 
-          if [[ $COMMIT_MESSAGE == *"major"* || $COMMIT_MESSAGE == *!* ]]; then
-            COMMIT_TYPE="major"
-          elif [[ $COMMIT_MESSAGE == *"feat"* ||
-                  $COMMIT_MESSAGE == *"feature"* ]]; then
-            COMMIT_TYPE="minor"
-          else
-            COMMIT_TYPE="patch"  # Default to patch if no specific message is found
-          fi
-
-          echo "commit_type=$COMMIT_TYPE" >> $GITHUB_OUTPUT
-
-      - id: cz
-        name: Create bump and changelog
-        uses: commitizen-tools/commitizen-action@master
-        with:
-          github_token: ${{ secrets.SVC_GITHUB_TOKEN }}
-          changelog_increment_filename: body.md
-          increment: ${{ steps.committype.outputs.commit_type }}  #Manually specify the desired increment {MAJOR,MINOR, PATCH}
-      - name: Print Version
-        run: echo "Bumped to version ${{ steps.cz.outputs.version }}"
+    - name: Bump version and push tag
+      uses: anothrNick/github-tag-action@v1 # Don't use @master or @v1 unless you're happy to test the latest version
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # if you don't want to set write permissions use a PAT token
+        WITH_V: true
+        PRERELEASE: true
